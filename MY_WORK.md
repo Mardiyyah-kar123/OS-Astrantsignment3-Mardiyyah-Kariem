@@ -32,11 +32,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | Mardiyyah Nizaam Kariem |
+| **Student ID** | 445052815 |
+| **University Email** | 445052815@std.psau.edu.sa |
+| **GitHub Username** | Mardiyyah-kar123 |
+| **Repository Link** | https://github.com/Mardiyyah-kar123/OS-Astrantsignment3-Mardiyyah-Kariem |
  
 ---
 
@@ -132,16 +132,20 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - [October 29, 2026, 12:00 PM]
+**What I did**: forked my repository, and set my student ID
 
 **Details**:
+- Logeed into my Github account
+- Forked my repository
+- Cloned my file on VS 
+- set my student ID and made my first commit
 
-**Challenges**:
+**Challenges**: Didn't understand parts of the code.
 
-**Solution**:
+**Solution**: Take it slow, no rush and I know I will eventually understand.
 
-**Time spent**:
+**Time spent**: 45 min
 
 ---
 
