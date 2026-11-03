@@ -70,7 +70,7 @@ lock.lock();            // acquire(): blocks if another thread owns the lock
 try {
     // critical section
 } finally {
-    lock.unlock();      // release(): ALWAYS in finally, even if an exception is thrown
+    lock.unlock();       // release(): ALWAYS in finally, even if an exception is thrown
 }
 ```
 

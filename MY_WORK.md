@@ -377,13 +377,13 @@ Verification block of **my final version**:
 > ⚠️ **WARNING:** Go through every line. Blackboard does not accept submissions after the deadline, which is **November 14, 2026**.
 
 **Repository**
-- [ ] Repository is **PUBLIC** (Settings → Danger Zone → Visibility)
-- [ ] Repository is renamed to `OS-Assignment3-YourFirstName-YourLastName`
-- [ ] GitHub account uses the university email (`@std.psau.edu.sa`)
+- [✅] Repository is **PUBLIC** (Settings → Danger Zone → Visibility)
+- [✅] Repository is renamed to `OS-Assignment3-YourFirstName-YourLastName`
+- [✅] GitHub account uses the university email (`@std.psau.edu.sa`)
 
 **Code**
-- [ ] Student ID is set in `SchedulerSimulationSync.java` (line 304)
-- [ ] My code is based **only** on the starter of this repository (nothing copied from previous assignments)
+- [✅] Student ID is set in `SchedulerSimulationSync.java` (line 304)
+- [✅] My code is based **only** on the starter of this repository (nothing copied from previous assignments)
 - [ ] Code compiles and runs with no errors, and terminates by itself (no `⛔ WATCHDOG`)
 - [ ] Feature 1 (ready queue lock), Feature 2 (statistics locks) and Feature 3 (semaphore, no busy waiting) all work
 - [ ] **The four verification lines are ✔ in 5 consecutive runs**
