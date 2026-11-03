@@ -149,16 +149,19 @@
 
 ---
 
-### Entry 2 - [Date and Time]
-**What I did**:
+### Entry 2 - [November 3, 2026, 10:00 PM]
+**What I did**: Added feature 1
 
-**Details**:
+**Details**: 
+- importet from java library `import java.util.concurrent.locks.ReentrantLock;`
+- declared ReentrantLock in readyQueue
+- locked and protected add(), poll(), processOf(), snapshot()
+  
+**Challenges**: error with the output
 
-**Challenges**:
+**Solution**: accidently erased 2 bracket from the poll() method
 
-**Solution**:
-
-**Time spent**:
+**Time spent**: 1 hour.
 
 ---
 
