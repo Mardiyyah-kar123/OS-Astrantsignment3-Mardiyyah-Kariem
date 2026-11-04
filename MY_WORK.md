@@ -165,16 +165,17 @@
 
 ---
 
-### Entry 3 - [Date and Time]
-**What I did**:
+### Entry 3 - [November 4, 2026, 5:40 PM]
+**What I did**: Add a lock to each veriable
 
 **Details**:
+    I used one lock per variable to allow for more fine-grained locking. This way, if one thread is updating the contextSwitchCount, another thread can still read or update the completedProcessCount or totalServiceTime without being blocked. This can improve concurrency and performance in a multi-threaded environment.
 
-**Challenges**:
+**Challenges**: nothing really
 
-**Solution**:
+**Solution**: no need 
 
-**Time spent**:
+**Time spent**: 30 min
 
 ---
 
