@@ -216,7 +216,7 @@ class ReadyQueue {
             lock.unlock();
         }
     }
-    public Semaphore getSemaphore() {
+    public Semaphore getSemaphore() { // return the counting semaphore for Feature 3
         return semaphore;
     }
 }

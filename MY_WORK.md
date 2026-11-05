@@ -179,16 +179,22 @@
 
 ---
 
-### Entry 4 - [Date and Time]
-**What I did**:
+### Entry 4 - [November 5, 2026, 10:15 PM]
+**What I did**: Replace Busy Waiting with a Counting Semaphore
 
 **Details**:
-
+- i first imported java.util.concurrent.Semaphore
+- add 'semaphore.release()' signal that one more process is available in the queue
+- return the counting semaphore using geth method
+- replacing the polling loop by a blocking wait on the counting semaphore
+- add release(), so when the last process has completed, wake up the CPUs that are blocked on the semaphore so that they can terminate
+  
 **Challenges**:
+honest, what confused me the most is the placement of the polling methind, where to put the waiting method exactly
 
-**Solution**:
+**Solution**: I figured it out eventully, with the help of AI
 
-**Time spent**:
+**Time spent**: 1 hour
 
 ---
 
