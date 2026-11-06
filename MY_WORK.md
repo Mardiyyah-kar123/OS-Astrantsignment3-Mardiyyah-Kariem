@@ -42,7 +42,7 @@
 
 ## 🎥 Video Link
 
-**Video Link**: [Paste your video link here]
+**Video Link**: https://drive.google.com/file/d/1FpNdV7_tbo337T7WimNqUdIU4VbXTqkq/view?usp=sharing
 
 > ⚠️ **WARNING:** The video must be **publicly accessible** ("Anyone with the link can view") on **Google Drive**, **YouTube (Unlisted or Public)** or any other cloud file-sharing system. A private, restricted or broken link counts as a **missing video (-1 mark)**.
 >
@@ -198,16 +198,18 @@ honest, what confused me the most is the placement of the polling methind, where
 
 ---
 
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 5 - [November 6, 2026, 4:32 PM]
+**What I did**: Uploaded my video
 
 **Details**:
+- Recoreded my commited codes
+- Save to googledrive and made it public
+- uploaded the link
+**Challenges**: forgot how to screne record
 
-**Challenges**:
+**Solution**: Googled it
 
-**Solution**:
-
-**Time spent**:
+**Time spent**: 20 min
 
 ---
 
