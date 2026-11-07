@@ -213,16 +213,18 @@ honest, what confused me the most is the placement of the polling methind, where
 
 ---
 
-### Entry 6 - [Optional - Date and Time]
-**What I did**:
+### Entry 6 - [November 7, 2026, 7:00 PM]
+**What I did**: Filling reflection and technical questions
 
 **Details**:
-
+- Ansewering part B: reflection questions
+- Answering Part C: Technical answers
+  
 **Challenges**:
 
 **Solution**:
 
-**Time spent**:
+**Time spent**: 1 hour
 
 ---
 
@@ -230,13 +232,16 @@ honest, what confused me the most is the placement of the polling methind, where
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: [4 hours]
 
-**Most challenging part**:
+**Most challenging part**: 
+Understanding the code, and ho to add feature 3.
 
 **Most interesting learning**:
+Feature 3, even though it took ti,e to understand it, it was intresting 
 
 **What I would do differently next time**:
+Do the homework earlier 😭😭
 
 ---
 
@@ -256,7 +261,9 @@ honest, what confused me the most is the placement of the polling methind, where
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Through this assignment, I learned that synchronization is essential when multiple threads access shared data at the same time. Without synchronization, race conditions can occur, causing incorrect results and unpredictable program behavior.
+I also learned about critical sections, which are parts of the code that access shared resources. These sections must be protected so that only one thread can execute them at a time. To achieve this, I used ReentrantLock, which provides mutual exclusion and prevents multiple threads from entering the same critical section simultaneously. I used the lock() and unlock() methods inside a try/finally block to guarantee that the lock is always released, even if an exception occurs.
+Another important lesson was the difference between a mutex lock and a counting semaphore. The lock was used to protect shared data such as the ready queue and statistics, while the semaphore was used to coordinate access to available processes. Instead of repeatedly checking whether the queue contained a process, CPU threads could block on acquire() and wake up only when a process became available through release(). This eliminated busy waiting and made the scheduler more efficient.
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -264,7 +271,9 @@ honest, what confused me the most is the placement of the polling methind, where
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+The most challenging part of this assignment was implementing the counting semaphore in Feature 3. I understood the theory behind acquire() and release(), but I found it difficult to determine exactly where they should be placed in the code.
+At first, I understood that release() should signal that a process is available and that acquire() should make a CPU wait until work exists. However, I was confused about the interaction between the semaphore and the ready queue, especially the placement of poll(). I initially thought that the semaphore could replace poll(), but later realized that the semaphore only tracks the number of available processes. After a CPU successfully calls acquire(), it still needs to call poll() to remove the actual process from the queue.
+Another challenge was understanding the shutdown logic. When the last process finishes, some CPU threads may still be blocked on acquire(). 
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -272,7 +281,9 @@ honest, what confused me the most is the placement of the polling methind, where
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I overcame these challenges by breaking the problem into smaller steps and testing each change separately. When I was implementing the semaphore, I first reviewed the assignment instructions and re-read the README several times to understand the intended behavior of acquire() and release().
+To better understand the program flow, I followed the execution of the CPU threads step by step and thought about what should happen when the queue is empty versus when a process is available. This helped me understand that the semaphore only controls availability and does not replace poll(), which still has to remove the process from the ready queue.
+I also tested the program after each small modification instead of changing many things at once. By checking the verification block and observing the program output, I could quickly identify whether a change introduced a problem. Finally, when I was unsure about the placement of certain synchronization operations, I sought help and compared my implementation against the assignment requirements until I understood how all the components worked together.
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -280,7 +291,7 @@ honest, what confused me the most is the placement of the polling methind, where
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Synchronization is used in many real-world applications where multiple users or threads access shared data. For example, in online banking, locks prevent two transactions from modifying the same account balance at the same time. In ticket or seat booking systems, synchronization ensures that the same seat cannot be booked by multiple customers simultaneously. Website visitor counters also require synchronization to prevent lost updates when many users access the site at once. Similarly, print queues and databases use locks and semaphores to manage shared resources safely and ensure data remains consistent. These situations are similar to this assignment, where multiple CPU threads accessed the same ready queue and shared statistics concurrently.
 
 ### Optional: What would you like to learn more about?
 
@@ -288,11 +299,11 @@ honest, what confused me the most is the placement of the polling methind, where
 
 ### Optional: How confident do you feel about synchronization concepts now?
 
-[Beginner / Intermediate / Confident. What do you understand well? What needs more practice?]
+Intermediate, I would say I understood it a lot more now, but as coding I thing I would still find it a bit challenging.
 
 ### Optional: Feedback on the assignment
 
-[Any comments? Was it helpful? Too easy or hard? Suggestions?]
+Honestly, it was good, and I liked the TODO comment placment for each feature that needed to be add. it was helpful. One small problem was with feature 3, it was a bit confusing to understand.
 
 ---
 
@@ -314,20 +325,28 @@ honest, what confused me the most is the placement of the polling methind, where
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+In my original starter run, the program crashed with NullPointerException and IllegalThreadStateException because multiple CPU threads accessed the ready queue simultaneously without synchronization. As a result, the verification block showed incorrect values, with the observed context switches, completed processes, and total service time all being 0 instead of their expected values. This demonstrates a race condition where threads interfere with each other's operations on shared data. After adding synchronization, all verification values matched the expected results and the program terminated correctly.
 
 Verification block of the **original starter**:
 ```
-[Paste the verification block (or the exception/watchdog message) of the starter here]
+![Before](image.png)
 ```
 
 Verification block of **my final version**:
 ```
-[Paste the verification block of your final version here (all lines ✔)]
+![After](image-1.png)
 ```
 
 **Explanation of the timeline:**
-[Explain the lost update step by step.]
+A lost update can happen on contextSwitchCount as follows:
+
+CPU-1 reads contextSwitchCount = 12 and pauses at RaceWindow.pause().
+
+CPU-2 reads contextSwitchCount = 12 and writes 13.
+
+CPU-1 resumes and also writes 13.
+
+The final value becomes 13 instead of 14, so one increment is lost. This can also happen on a real machine because the operating system can switch between threads at any time. Race conditions are difficult to detect because they depend on timing and may only appear occasionally.
 
 ## Question 2: Critical Sections and Lock Granularity
 
@@ -337,12 +356,17 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+I protected the ready queue methods (add(), poll(), processOf(), and snapshot()) with a dedicated ReentrantLock, and I protected the shared statistics using three separate locks: one for contextSwitchCount, one for completedProcessCount, and one for totalServiceTime. I chose one lock per statistic because the three variables are independent, so updating one variable should not block access to another. This provides finer-grained locking, reduces contention, and improves concurrency compared to using a single lock for all statistics. The ready queue uses a separate lock because queue operations are unrelated to the statistics and should not be blocked by statistic updates. The locks provide mutual exclusion, while the default ReentrantLock is not fair, meaning a thread that has been waiting longer is not guaranteed to acquire the lock first.
 
 | Critical section (variable / method) | Lock used | Why it needs protection |
-|---|---|---|
+|[ReadyQueue.add()]|	[lock] |[Multiple CPUs can add processes at the same time]|
 | [e.g., `ReadyQueue.poll()`] | [lock name] | [reason] |
-| [...] | [...] | [...] |
+| [ReadyQueue.poll()] | [	lock] | [Multiple CPUs can remove processes at the same time] |
+| [ReadyQueue.processOf()] | [	lock] | [Accesses the shared process map] |
+[ReadyQueue.snapshot()] | [	lock] | [	Iterates through shared queue data] |
+[contextSwitchCount] | [contextSwitchLock] | [Prevents lost updates during increment/read] |
+[completedProcessCount] | [completedProcessLock	] | [Prevents lost updates during increment/read] |
+[totalServiceTime] | [totalServiceTimeLock] | [Prevents lost updates during increment/read] |
 
 ## Question 3: Busy Waiting vs Semaphore
 
@@ -352,7 +376,7 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+The starter program used busy waiting, where a CPU repeatedly checked the ready queue when it was empty. This wastes CPU time because the thread keeps running even when no work is available. In my final version, the semaphore represents the number of processes currently waiting in the ready queue and its initial value is 0 because the queue starts empty. After the initial numProcesses calls to add(), the semaphore value becomes equal to the number of processes added to the queue. The final release(SharedStats.totalCPUs) wakes any CPUs blocked on acquire() so they can terminate correctly; otherwise, some CPU threads would wait forever and the program would hang.
 
 ## Question 4: Classical Problems and Deadlock
 
@@ -361,22 +385,27 @@ Verification block of **my final version**:
 > 💡 **TIP:** Recall the bounded-buffer solution of the slides (`empty`, `full`, `mutex`) and the order of `wait()` calls in the producer and the consumer. For the deadlock, think about a producer that holds the mutex while waiting for a free slot that only a consumer (who needs the mutex) can create.
 
 **Your Answer:** *(3-5 sentences)*
+This problem is similar to the classical bounded-buffer (producer-consumer) problem. The CPUs act as consumers because they remove processes from the ready queue, while processes that are re-enqueued act as producers because they add work back into the queue. If the queue had a maximum capacity K, I would use three semaphores: empty initialized to K, full initialized to 0, and mutex initialized to 1. A deadlock could occur if a producer acquired the mutex and then waited on empty while a consumer needed the mutex to remove an item and free space. To prevent this, I would break the circular-wait condition by always acquiring synchronization objects in a consistent order.
 
 **Classical problem and roles**:
-[Name the problem; who is the producer, who is the consumer?]
+- Classical problem: Bounded Buffer (Producer-Consumer)
+- Producer: A process being re-enqueued into the ready queue
+- Consumer: CPU threads removing processes from the ready queue
 
 **Semaphores for a bounded queue (name and initial value)**:
-[Name the three semaphores and their initial values.]
+- empty = K (all queue slots are initially empty)
+- full = 0 (no processes are initially in the queue)
+- mutex = 1 (provides mutual exclusion for queue access)
 
 **Deadlock scenario and prevention**:
-[Describe the scenario and the necessary condition you would break.]
+A deadlock can occur if a producer acquires mutex first and then waits for empty to become available while a consumer is waiting for mutex in order to remove an item from the queue. Neither thread can continue, so both remain blocked. I would prevent this by breaking the circular-wait condition and following a fixed acquisition order, as done in the producer-consumer solution.
 
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1. Race conditions occur when multiple threads access shared data without synchronization.
+2. ReentrantLocks provide mutual exclusion and protect critical sections.
+3. Semaphores eliminate busy waiting and coordinate thread access to shared resources.
 
 **Concepts I need to study more:**
 1.
@@ -396,33 +425,33 @@ Verification block of **my final version**:
 **Code**
 - [✅] Student ID is set in `SchedulerSimulationSync.java` (line 304)
 - [✅] My code is based **only** on the starter of this repository (nothing copied from previous assignments)
-- [ ] Code compiles and runs with no errors, and terminates by itself (no `⛔ WATCHDOG`)
-- [ ] Feature 1 (ready queue lock), Feature 2 (statistics locks) and Feature 3 (semaphore, no busy waiting) all work
-- [ ] **The four verification lines are ✔ in 5 consecutive runs**
-- [ ] Every lock is released in a `finally` block
-- [ ] `RaceWindow`, `Config`, the verification block and the watchdog are **unchanged**
-- [ ] Each feature has clear comments
+- [✅] Code compiles and runs with no errors, and terminates by itself (no `⛔ WATCHDOG`)
+- [✅] Feature 1 (ready queue lock), Feature 2 (statistics locks) and Feature 3 (semaphore, no busy waiting) all work
+- [✅] **The four verification lines are ✔ in 5 consecutive runs**
+- [✅] Every lock is released in a `finally` block
+- [✅] `RaceWindow`, `Config`, the verification block and the watchdog are **unchanged**
+- [✅] Each feature has clear comments
 
 **Commits**
-- [ ] **At least 4 meaningful commits, ideally 7 or more**
-- [ ] **One commit per feature**
-- [ ] Commits are spread over **different dates** (not all in the last hour)
-- [ ] Everything is **pushed** to GitHub
+- [✅] **At least 4 meaningful commits, ideally 7 or more**
+- [✅] **One commit per feature**
+- [✅] Commits are spread over **different dates** (not all in the last hour)
+- [✅] Everything is **pushed** to GitHub
 
 **This file (`MY_WORK.md`)**
-- [ ] Full name and student ID filled in at the top
-- [ ] Development log has **5+ entries** on different dates
-- [ ] Reflection: 4 questions, 5-7 sentences each
+- [✅] Full name and student ID filled in at the top
+- [✅] Development log has **5+ entries** on different dates
+- [✅] Reflection: 4 questions, 5-7 sentences each
 - [ ] Technical answers: 4 questions, 3-5 sentences each, with examples from **your** output (starter output **and** final output pasted in Question 1)
-- [ ] No `[...]` placeholders left
-- [ ] No section headers deleted
+- [✅] No `[...]` placeholders left
+- [✅] No section headers deleted
 
 **Video**
-- [ ] 2-3 minutes long, named `StudentID_Assignment3_Demo.mp4`
-- [ ] Shows your name, ID, repository, 3 features (and your lock granularity choice), IDE execution with the verification block, one synchronization concept, and commit history
-- [ ] Link is **public** (tested in an incognito window) and pasted in the **Video Link** section above
+- [✅] 2-3 minutes long, named `StudentID_Assignment3_Demo.mp4`
+- [✅] Shows your name, ID, repository, 3 features (and your lock granularity choice), IDE execution with the verification block, one synchronization concept, and commit history
+- [✅] Link is **public** (tested in an incognito window) and pasted in the **Video Link** section above
 
 **Blackboard**
-- [ ] Submit **only** the link to your public GitHub repository
+- [✅] Submit **only** the link to your public GitHub repository
 
 > 🎯 **Good luck!** Start early, commit regularly, and make sure you can explain every line you submit.
